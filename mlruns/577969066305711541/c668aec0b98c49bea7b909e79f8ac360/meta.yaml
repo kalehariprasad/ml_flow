@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Hariprasad/Documents/ml_flow/mlruns/577969066305711541/c668aec0b98c49bea7b909e79f8ac360/artifacts
+end_time: 1721909702867
+entry_point_name: ''
+experiment_id: '577969066305711541'
+lifecycle_stage: active
+run_id: c668aec0b98c49bea7b909e79f8ac360
+run_name: exultant-zebra-889
+run_uuid: c668aec0b98c49bea7b909e79f8ac360
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721909702526
+status: 3
+tags: []
+user_id: Hariprasad
