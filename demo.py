@@ -4,7 +4,7 @@ import mlflow.sklearn
 from sklearn.model_selection import train_test_split,GridSearchCV
 from sklearn.datasets import load_diabetes
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (r2_score,mean_absolute_error,mean_squared_error)
+from sklearn.metrics import (r2_score, mean_absolute_error, mean_squared_error)
 import dagshub
 dagshub.init(repo_owner='kalehariprasad', repo_name='ml_flow', mlflow=True)
 
@@ -23,8 +23,8 @@ rf = RandomForestClassifier(random_state=42)
 
 # Defining the parameter grid for GridSearchCV
 param_grid = {
-    'n_estimators': [5,50, 100],
-    'max_depth': [None, 3,6,7]
+    'n_estimators': [5,50, 100,150, 200],
+    'max_depth': [None, 5, 9, 11]
 }
 
 # Applying GridSearchCV
