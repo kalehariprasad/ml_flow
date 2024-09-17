@@ -5,7 +5,7 @@ FROM python:3.10.14
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY app/ /app/
+COPY app_folder/ /app/
 
 # Install the required Python packages
 RUN pip install  -r requirements.txt
