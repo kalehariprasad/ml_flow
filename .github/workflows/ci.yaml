@@ -1,7 +1,7 @@
 
 # pulled from repo
 name: "CI"
-
+on: push
 
 jobs:
   project-testing:
