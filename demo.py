@@ -8,21 +8,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (r2_score, mean_absolute_error, mean_squared_error)
 import dagshub
 
-# Set up DagsHub credentials for MLflow tracking
-dagshub_token = os.getenv("DAGSHUB_PAT")
-if not dagshub_token:
-    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
 
-os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
-
-dagshub_url = "https://dagshub.com"
-repo_owner = "kalehariprasad"
-repo_name = "ml_flow"
-
-# Set up MLflow tracking URI
-mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
-
+dagshub.init(repo_owner='kalehariprasad', repo_name='ml_flow', mlflow=True)
+mlflow.set_tracking_uri('https://dagshub.com/kalehariprasad/ml_flow.mlflow')
 # Load data
 df = pd.read_csv("diabetes.csv")
 X = df.drop('Outcome', axis=1)
