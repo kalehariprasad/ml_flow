@@ -28,7 +28,11 @@ jobs:
           pip install -r requirements.txt
       - name: run demo.py
         env:
-        
           DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
         run: |
           python demo.py         
+      - name: run register_model.py
+        env:
+          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+        run: |
+          python register_model.py         
