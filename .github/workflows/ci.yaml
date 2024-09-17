@@ -49,7 +49,7 @@ jobs:
           python prediction_inference.py
 
 
-  build docker :
+  Docker-build :
     runs-on: ubuntu-latest
 
     steps:
