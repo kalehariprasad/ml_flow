@@ -31,8 +31,18 @@ jobs:
           DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
         run: |
           python demo.py         
-      - name: run register_model.py
+      - name: run register_model
         env:
           DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
         run: |
-          python register_model.py         
+          python register_model.py        
+      - name: run stage_transiction.py
+        env:
+          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+        run: |
+          python stage_transiction.py
+      - name: run prediction_inference.py
+        env:
+          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+        run: |
+          python prediction_inference.py
