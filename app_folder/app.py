@@ -20,6 +20,9 @@ repo_owner = "kalehariprasad"
 repo_name = "ml_flow"
 # Set up MLflow tracking URI
 mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+model_name="diabetes-RF"
+version=1
+model=mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{version}")
 
 # Define feature names and expected types
 feature_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
