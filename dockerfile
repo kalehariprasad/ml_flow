@@ -11,7 +11,7 @@ COPY app_folder/ /app/
 RUN pip install  -r requirements.txt
 
 # Expose port 8051 for the Streamlit app
-EXPOSE 8051
+EXPOSE 8501
 
 # Define the command to run the Streamlit application
 CMD ["streamlit", "run", "app.py"]
