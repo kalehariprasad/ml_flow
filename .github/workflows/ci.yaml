@@ -66,7 +66,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:V1 .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -76,4 +76,4 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:V1
