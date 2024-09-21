@@ -43,7 +43,7 @@ jobs:
         env:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
-          python stage_transition.py
+          python stage_transiction.py
 
       - name: Run prediction_inference.py
         env:
