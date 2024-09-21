@@ -1,19 +1,16 @@
-
 # pulled from repo
 name: "CI"
 on: push
 
 jobs:
   project-testing:
-
     runs-on: ubuntu-latest
-    
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: setup python
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.10'
@@ -25,52 +22,58 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      - name: install dependencies
+
+      - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: run demo.py
+
+      - name: Run demo.py
         env:
-          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           python demo.py         
-      - name: run register_model
+
+      - name: Run register_model
         env:
-          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           python register_model.py        
-      - name: run stage_transiction.py
+
+      - name: Run stage_transition.py
         env:
-          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
-          python stage_transiction.py
-      - name: run prediction_inference.py
+          python stage_transition.py
+
+      - name: Run prediction_inference.py
         env:
-          DAGSHUB_PAT: ${{secrets.DAGSHUB_PAT}}
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           python prediction_inference.py
 
-Docker-build:
-  runs-on: ubuntu-latest
-  needs: project-testing
+  Docker-build:
+    runs-on: ubuntu-latest
+    needs: project-testing
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
 
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:latest .
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:latest .
 
-    - name: Push Docker image
-      run: |
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-streamlit-app:latest
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/diabetes:latest
