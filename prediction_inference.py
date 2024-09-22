@@ -4,6 +4,7 @@ import dagshub
 import mlflow
 import pandas as pd
 import os 
+from mlflow.tracking import MlflowClient
 # Set up DagsHub credentials for MLflow tracking
 dagshub_token = os.getenv("DAGSHUB_PAT")
 if not dagshub_token:
@@ -17,7 +18,7 @@ repo_owner = "kalehariprasad"
 repo_name = "ml_flow"
 # Set up MLflow tracking URI
 mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
-
+client=MlflowClient()
 model_name="diabetes-RF"
 # Get the latest version of the model
 def get_latest_model_version(model_name):

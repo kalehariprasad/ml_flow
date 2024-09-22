@@ -22,7 +22,7 @@ client = MlflowClient()
 # Get the latest run ID
 def get_latest_run_id(experiment_name):
     experiment = client.get_experiment_by_name(experiment_name)
-    runs = client.list_runs(experiment.experiment_id, order_by=["start_time desc"])
+    runs = client.search_runs(experiment.experiment_id, order_by=["start_time desc"])
     if runs:
         return runs[0].info.run_id
     else:
