@@ -19,8 +19,18 @@ repo_name = "ml_flow"
 mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
 
 model_name="diabetes-RF"
-version=1
-model=mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{version}")
+# Get the latest version of the model
+def get_latest_model_version(model_name):
+    model_versions = client.get_model_versions(model_name)
+    if model_versions:
+        # Sort the versions and get the latest one
+        latest_version = max(int(version.version) for version in model_versions)
+        return latest_version
+    else:
+        return None
+
+latest_version = get_latest_model_version(model_name)
+model=mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{latest_version}")
 
 # Define feature names and expected types
 feature_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']

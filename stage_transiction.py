@@ -22,15 +22,27 @@ client=MlflowClient()
 
 
 model_name="diabetes-RF"
-version=3
-new_stage="Staging"
 
-client.transition_model_version_stage(
-    name=model_name,
-    version=version,
-    stage=new_stage,
-    archive_existing_versions=False
+# Get the latest version of the model
+def get_latest_model_version(model_name):
+    model_versions = client.get_model_versions(model_name)
+    if model_versions:
+        # Sort the versions and get the latest one
+        latest_version = max(int(version.version) for version in model_versions)
+        return latest_version
+    else:
+        return None
 
-)
+latest_version = get_latest_model_version(model_name)
 
-print(f"{version}rd vesrion  of  {model_name} transictined to {new_stage}")
+if latest_version is not None:
+    new_stage = "Staging"
+    model_name="diabetes-RF"
+    client.transition_model_version_stage(
+        name=model_name,
+        version=latest_version,
+        stage=new_stage,
+        archive_existing_versions=False
+    )
+
+    print(f"{latest_version}rd version of {model_name} transitioned to {new_stage}")
