@@ -25,7 +25,7 @@ model_name="diabetes-RF"
 
 # Get the latest version of the model
 def get_latest_model_version(model_name):
-    model_versions = client.get_model_versions(model_name)
+    model_versions = client.get_model_version(model_name)
     if model_versions:
         # Sort the versions and get the latest one
         latest_version = max(int(version.version) for version in model_versions)
