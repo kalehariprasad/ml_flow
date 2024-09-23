@@ -45,11 +45,6 @@ jobs:
         run: |
           python stage_transiction.py
 
-      - name: Run prediction_inference.py
-        env:
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-        run: |
-          python prediction_inference.py
 
   Docker-build:
     runs-on: ubuntu-latest
