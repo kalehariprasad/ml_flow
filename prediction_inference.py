@@ -4,6 +4,8 @@ import dagshub
 import mlflow
 import pandas as pd
 import os 
+import time
+from requests.exceptions import RequestException
 from mlflow.tracking import MlflowClient
 # Set up DagsHub credentials for MLflow tracking
 dagshub_token = os.getenv("DAGSHUB_PAT")
@@ -35,6 +37,19 @@ def get_latest_model_version(model_name):
 
 latest_version = get_latest_model_version(model_name)
 model=mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{latest_version}")
+
+
+def load_model_with_retry(model_uri, retries=3, delay=5):
+    for attempt in range(retries):
+        try:
+            model = mlflow.pyfunc.load_model(model_uri=model_uri)
+            return model
+        except Exception as e:
+            print(f"Attempt {attempt + 1} failed: {e}")
+            time.sleep(delay)
+    raise RuntimeError("Failed to load model after several attempts")
+
+model = load_model_with_retry(f"models:/{model_name}/{latest_version}")
 
 # Define feature names and expected types
 feature_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
