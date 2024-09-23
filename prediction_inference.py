@@ -39,18 +39,6 @@ latest_version = get_latest_model_version(model_name)
 model=mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{latest_version}")
 
 
-def load_model_with_retry(model_uri, retries=3, delay=5):
-    for attempt in range(retries):
-        try:
-            model = mlflow.pyfunc.load_model(model_uri=model_uri)
-            return model
-        except Exception as e:
-            print(f"Attempt {attempt + 1} failed: {e}")
-            time.sleep(delay)
-    raise RuntimeError("Failed to load model after several attempts")
-
-model = load_model_with_retry(f"models:/{model_name}/{latest_version}")
-
 # Define feature names and expected types
 feature_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
 feature_types = {'Pregnancies': np.int64, 'Glucose': np.int64, 'BloodPressure': np.int64, 'SkinThickness': np.int64, 'Insulin': np.int64, 'BMI': np.float64, 'DiabetesPedigreeFunction': np.float64, 'Age': np.int64}
